@@ -12,7 +12,6 @@
     "core-js": "^3.8.3",
     "roboto-fontface": "*",
     "vue": "^3.2.47",
-    "vue-cli-plugin-vuetify": "^2.5.8",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
