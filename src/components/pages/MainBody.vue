@@ -3,7 +3,13 @@
         <!-- <form @submit.prevent="addTodo"> -->
         <div id="addTodo">
             <MasterText class="task" placeholder="タスクを記入"></MasterText>
-            <MasterButton class="add-Button" @click="click('')">タスクを追加</MasterButton>
+            <MasterButton class="add-Button" @click="showModal()">タスクを追加</MasterButton>
+            <MasterModal
+                :message="message"
+                v-if=modal
+                @execute-method="executeMethod"
+                >
+            </MasterModal>
         </div>
         <!-- </form> -->
     </main>
@@ -12,17 +18,28 @@
 <script>
   import MasterButton from '../parts/MasterButton.vue';
   import MasterText from '../parts/MasterText.vue';
+  import MasterModal from '../parts/MasterModal.vue';
   
   export default {
-      components: {
+    data() {
+        return {
+            modal: false,
+        }
+    },
+    components: {
         MasterButton,
         MasterText,
-      },
-      methods: {
-      click(message) {
-        alert(message);
-        // ここからモーダル
-      }
+        MasterModal,
+    },
+    methods: {
+        click(message) {
+            alert(message);
+            // ここからモーダル
+        },
+        showModal() {
+            // モーダル表示する際の処理が必要ならここに書く
+            this.modal = true;
+        },
     }
   }
   </script>
