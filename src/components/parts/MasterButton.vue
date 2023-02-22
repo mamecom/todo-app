@@ -18,9 +18,6 @@
             click() {
                 this.$emit('click');
             },
-            // addTodoClickick() {
-            //     this.$emit('click');
-            // },
         }
     }
 </script>

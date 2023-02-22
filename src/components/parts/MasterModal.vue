@@ -2,33 +2,30 @@
     <div id="modal">
         <div id="modal-content" class="modal">
             <p class="modal-message">今日のタスク？今後のタスク？</p>
-              <MasterButton class="today" @click="returnfalse()">今日</MasterButton>
-              <MasterButton class="otherdays" @click="returnTrue()">今日以外</MasterButton>
+            <MasterButton class="today" @click="returnToday()">今日</MasterButton>
+            <MasterButton class="otherdays" @click="returnOther()">今日以外</MasterButton>
         </div>
         <div id="modal-overlay"></div>
     </div>
 </template>
 
 <script>
-import MasterButton from './MasterButton.vue';
+  import MasterButton from './MasterButton.vue';
 
-  export default {
-    components: {
-      MasterButton,
-},
+    export default {
+      components: {
+        MasterButton,
+      },
 
-        name: "MasterModal",
-        props: ["message"],
-
-        methods: {
-            returnfalse() {
-                this.$emit("execute-method", false);
-            },
-            returnTrue() {
-                this.$emit("execute-method", true);
-            },
-        },
-    }
+      methods: {
+          returnToday() {
+              this.$emit("close-modal", "today");
+          },
+          returnOther() {
+              this.$emit("close-modal", "other");
+          },
+      },
+  }
 </script>
 
 <style scoped>
@@ -55,7 +52,7 @@ import MasterButton from './MasterButton.vue';
   padding: 7px;
   margin: 50px 0 50px 130px;
   width: 70px;
-  border-radius: 7%;
+  border-radius: 5px;
   background-color: #D7E9B9;
   float: left;
 }
@@ -65,22 +62,10 @@ import MasterButton from './MasterButton.vue';
   padding: 7px;
   margin: 50px 130px 50px 0;
   width: 70px;
-  border-radius: 7%;
+  border-radius: 5px;
   background-color: #FAAB78;
   float: right;
 }
-
-/* .otherdays:hover {
-  cursor: pointer;
-  color: rgb(14, 48, 240);
-  font-weight: bold;
-} */
-
-/* .today:hover {
-  background: #a5272a;
-  color: white;
-  cursor: pointer;
-} */
 
 #modal-overlay {
   z-index: 1;

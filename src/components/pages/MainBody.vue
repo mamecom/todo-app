@@ -1,17 +1,14 @@
 <template>
     <main id="main-display">
-        <!-- <form @submit.prevent="addTodo"> -->
         <div id="addTodo">
             <MasterText class="task" placeholder="タスクを記入"></MasterText>
             <MasterButton class="add-Button" @click="showModal()">タスクを追加</MasterButton>
             <MasterModal
-                :message="message"
                 v-if=modal
-                @execute-method="executeMethod"
-                >
+                @close-modal="closeModal"
+            >
             </MasterModal>
         </div>
-        <!-- </form> -->
     </main>
 </template>
   
@@ -39,6 +36,9 @@
         showModal() {
             // モーダル表示する際の処理が必要ならここに書く
             this.modal = true;
+        },
+        closeModal: function() {
+            this.modal = false;
         },
     }
   }
@@ -70,6 +70,7 @@
       background-color: #D7E9B9;
   
       border: none;
+      border-radius: 5px;
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     }
   
