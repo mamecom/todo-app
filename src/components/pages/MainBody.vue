@@ -8,6 +8,10 @@
                 @close-modal="closeModal"
             >
             </MasterModal>
+            <div id="todoCard">
+                <MasterCard>今日のタスク</MasterCard>
+                <MasterCard>今日以外のタスク</MasterCard>
+            </div>
         </div>
     </main>
 </template>
@@ -16,6 +20,7 @@
   import MasterButton from '../parts/MasterButton.vue';
   import MasterText from '../parts/MasterText.vue';
   import MasterModal from '../parts/MasterModal.vue';
+  import MasterCard from '../parts/MasterCard.vue';
   
   export default {
     data() {
@@ -27,6 +32,7 @@
         MasterButton,
         MasterText,
         MasterModal,
+        MasterCard,
     },
     methods: {
         click(message) {
@@ -68,10 +74,15 @@
       font-size: 19px;
       padding: 12px 28px;
       background-color: #D7E9B9;
-  
       border: none;
       border-radius: 5px;
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+
+    #todoCard {
+        display: flex;
+        justify-content: space-around;
+        padding: 100px;
     }
   
   </style>
