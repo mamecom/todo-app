@@ -3,10 +3,33 @@
         <p class="cardName">
             <slot>cardName</slot>
         </p>
+        <ul>
+            <li>
+            {{ todos }}</li>
+        </ul>
     </div>
 </template>
 
 <script>
+
+    export default {
+        data() {
+            return {
+                data: {
+
+                }
+            }
+        },
+        computed: {
+            todos() {
+            return this.$store.state.todos
+            }
+        },
+        mounted() {
+            // this.data = this.$store.state.todos
+            // console.log(this.data);
+        }
+    }
 </script>
 
 <style>

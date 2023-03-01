@@ -1,7 +1,7 @@
 <template>
     <main id="main-display">
         <div id="addTodo">
-            <MasterText class="task" placeholder="タスクを記入"></MasterText>
+            <MasterText class="task" :value="data" @inputData="inputData" placeholder="タスクを記入"></MasterText>
             <MasterButton class="add-Button" @click="showModal()">タスクを追加</MasterButton>
             <MasterModal
                 v-if=modal
@@ -25,6 +25,8 @@
   export default {
     data() {
         return {
+            data: "",
+            showInputData: "",
             modal: false,
         }
     },
@@ -35,12 +37,10 @@
         MasterCard,
     },
     methods: {
-        click(message) {
-            alert(message);
-            // ここからモーダル
+        inputData(value) {
+            this.showInputData = value;
         },
         showModal() {
-            // モーダル表示する際の処理が必要ならここに書く
             this.modal = true;
         },
         closeModal: function() {

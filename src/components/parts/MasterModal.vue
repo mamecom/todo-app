@@ -13,6 +13,12 @@
   import MasterButton from './MasterButton.vue';
 
     export default {
+      // name: "doneday",
+      data() {
+        return {
+          
+        }
+      },
       components: {
         MasterButton,
       },
