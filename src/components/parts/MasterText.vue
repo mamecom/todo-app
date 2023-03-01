@@ -1,21 +1,24 @@
 <template>
-    <input v-model="inputText">
+    <!-- <input type="text" @input="getInputValue" :value="value" v-model="inputText"> -->
+    <input type="text" @input="getInputValue" :value="value" />
 </template>
 
 <script>
 export default {
+    props: {
+        value: String,
+    },
+
     data() {
         return {
-            id:'',
-            inputText: '',
-            // hideCompleted: false,
-            todos: []
-        }
+            showInputData: "",
+        };
     },
-    addTodo() {
-        this.todos.push({id: this.todos.length +1, text: this.newTodo, done: false})
-        this.newTodo = ''
+    methods: {
+        getInputValue($event) {
+            this.$emit("inputValue", $event.target.value);
+        },
     },
-}
+};
 
 </script>
