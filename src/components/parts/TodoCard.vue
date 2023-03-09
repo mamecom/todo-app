@@ -5,7 +5,7 @@
         </p>
         <ul>
             <li
-                v-for="todo in todos" :key=todo.id>
+                v-for="todo in todayTodos" :key=todo.id>
                 {{ todo.text }}
             </li>
         </ul>
@@ -23,8 +23,8 @@
             }
         },
         computed: {
-            todos() {
-                return this.$store.state.todos
+            todayTodos() {
+                return this.$store.state.todayTodos
             }
         },
         // mounted() {

@@ -13,10 +13,9 @@
   import MasterButton from './MasterButton.vue';
 
     export default {
-      // name: "doneday",
       data() {
         return {
-          todoDay : "",
+          // todoDay : "",
         }
       },
       components: {
@@ -25,12 +24,10 @@
 
       methods: {
           returnToday() {
-              // $event.target.todoDay = "today"
-              this.$emit('close-modal', 'today');
+              this.$emit('close-modal', 1);     // HACK: 引数の命名を今日、それ以外でわかるようにしたい
           },
-          returnOther($event) {
-            $event.target.todoDay = "otherday"
-              this.$emit("close-modal", $event.target.todoDay);
+          returnOther() {
+              this.$emit("close-modal", 2);     // HACK: 引数の命名を今日、それ以外でわかるようにしたい
           },
       },
   }
