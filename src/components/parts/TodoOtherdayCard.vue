@@ -4,10 +4,7 @@
             <slot>cardName</slot>
         </p>
         <ul>
-            <li
-                v-for="todo in todayTodos" :key=todo.id>
-                {{ todo.text }}
-            </li>
+            <li v-for="todo in todayTodos" :key="todo.text">{{ todo.text }}</li>
         </ul>
     </div>
 </template>
@@ -17,20 +14,22 @@
     export default {
         data() {
             return {
-                data: {
-
-                }
+                
             }
         },
         computed: {
+            todos() {
+                return this.$store.state.todos
+            },
             todayTodos() {
-                return this.$store.state.todayTodos
+                var date = new Date();
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                date = `${year}/${month}/${day}`
+                return this.$store.state.todos.filter(t => t.day !== date)
             }
         },
-        // mounted() {
-        //     this.data = this.$store.state.todos
-        //     console.log(this.data);
-        // }
     }
 </script>
 

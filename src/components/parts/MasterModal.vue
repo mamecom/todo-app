@@ -24,10 +24,10 @@
 
       methods: {
           returnToday() {
-              this.$emit('close-modal', 1);     // HACK: 引数の命名を今日、それ以外でわかるようにしたい
+              this.$emit('close-modal', true);     // HACK: 引数の命名を今日、それ以外でわかるようにしたい
           },
           returnOther() {
-              this.$emit("close-modal", 2);     // HACK: 引数の命名を今日、それ以外でわかるようにしたい
+              this.$emit("close-modal", false);     // HACK: 引数の命名を今日、それ以外でわかるようにしたい
           },
       },
   }

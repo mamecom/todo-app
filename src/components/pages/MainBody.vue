@@ -5,12 +5,12 @@
             <MasterButton class="add-Button" @click="showModal()">タスクを追加</MasterButton>
             <MasterModal
                 v-if=modal
-                @close-modal="getTodoDay"
+                @close-modal="setTodoDay"
             >
             </MasterModal>
             <div id="todoCard">
-                <TodoCard>今日のタスク</TodoCard>
-                <TodoCard>今日以外のタスク</TodoCard>
+                <TodoTodayCard>今日のタスク</TodoTodayCard>
+                <TodoOtherdayCard>今日以外のタスク</TodoOtherdayCard>
             </div>
         </div>
     </main>
@@ -20,10 +20,9 @@
   import MasterButton from '../parts/MasterButton.vue';
   import MasterText from '../parts/MasterText.vue';
   import MasterModal from '../parts/MasterModal.vue';
-  import TodoCard from '../parts/TodoCard.vue';
+  import TodoTodayCard from '../parts/TodoTodayCard.vue'
+  import TodoOtherdayCard from '../parts/TodoOtherdayCard.vue';
   import { ref } from 'vue'
-
-  let id = 3
   
   export default {
     data() {
@@ -31,16 +30,20 @@
             data: "",
             newTodoText: "",
             modal: false,
-            judgeDay: 1,
-            resultTodoDay: 1,
-            date: new Date()
+            todayOrOtherday: false,
+            todoDay: "",
+            date: "today",
+            day: "",
+            month: "",
+            year: "",
         }
     },
     components: {
         MasterButton,
         MasterText,
         MasterModal,
-        TodoCard,
+        TodoTodayCard,
+        TodoOtherdayCard,
     },
     methods: {
         inputData(value) {
@@ -49,39 +52,34 @@
         showModal() {
             this.modal = true;
         },
-        getTodoDay($event) {
+        setTodoDay($event) {
             this.modal = false;
-            this.todayOrOtherday= $event;
-            var resultDay = this.judgeTodoDay(this.todayOrOtherday);
-            if (1 != resultDay) {                       // HACK: 今日、今日以外の判定を数値ではなく明示的にしたい
-                // const newTodo = ref({ id: id, text: this.newTodoText ,day: this.date , complete: false })
-                // this.addTodayTodo(newTodo, this.date);
+            this.todayOrOtherday= $event;                       // MEMO: true:今日、false:今日以外
+
+            if (!this.todayOrOtherday) {                       // HACK: 今日、今日以外の判定をbooleanではなく明示的にしたい
+                this.todoDay = this.getDate(this.todayOrOtherday);
             }
-            console.log(resultDay)
-            const newTodo = ref({ id: id, text: this.newTodoText ,day: this.date , complete: false })
-            this.addTodayTodo(newTodo);
+            this.todoDay = this.getDate(this.todayOrOtherday);
+            const newTodo = ref({ id: this.$store.state.todos.length + 1, text: this.newTodoText ,day: this.todoDay , complete: false })
+            this.addTodo(newTodo);
         },
-        judgeTodoDay(todayOrOtherday) {
-            var day = this.date.getDate();
-            var month = this.date.getMonth() + 1; 
-            var year = this.date.getFullYear();
-            if (todayOrOtherday != this.judgeDay) {     // 今日以外選択時
-                day = this.date.getDate() + 1;
-                return this.resultTodoDay + 1;
-            }
-            // 今日選択時
-            this.date = `${year}/${month}/${day}`
-            return this.resultTodoDay;
+        getDate(todayOrOtherday) {
+            var date = new Date();
+            this.day = date.getDate();
+            this.month = date.getMonth() + 1;
+            this.year = date.getFullYear();
+            if(!todayOrOtherday) { return this.date = `${this.year}/${this.month}/${this.day + 1}` }
+            return this.date = `${this.year}/${this.month}/${this.day}`
         },
-        addTodayTodo(todo) {
-            console.log(todo)
-            this.$store.dispatch('addTodayTodo', todo)
-        }
+        addTodo(todo) {
+            this.$store.dispatch('addTodo', todo)
+        },
     },
     computed: {
         todos() {
             return this.$store.state.todos;
-        }
+        },
+        
     }
   }
   </script>

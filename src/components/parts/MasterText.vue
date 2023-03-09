@@ -8,12 +8,6 @@ export default {
     props: {
         value: String,
     },
-
-    data() {
-        return {
-            newTodo: "",
-        };
-    },
     methods: {
         getInputValue($event) {
             this.$emit("inputValue", $event.target.value);
