@@ -60,7 +60,7 @@
                 this.todoDay = this.getDate(this.todayOrOtherday);
             }
             this.todoDay = this.getDate(this.todayOrOtherday);
-            const newTodo = ref({ id: this.$store.state.todos.length + 1, text: this.newTodoText ,day: this.todoDay , complete: false })
+            const newTodo = ref({ id: this.$store.state.todos.length + 1, text: this.newTodoText ,day: this.todoDay , done: false })
             this.addTodo(newTodo);
         },
         getDate(todayOrOtherday) {
@@ -79,7 +79,6 @@
         todos() {
             return this.$store.state.todos;
         },
-        
     }
   }
   </script>

@@ -4,18 +4,30 @@
             <slot>cardName</slot>
         </p>
         <ul>
-            <li v-for="todo in todayTodos" :key="todo.text">{{ todo.text }}</li>
+            <li v-for="todo in todayTodos" :key="todo.id">
+                <input type="checkbox" v-model="todo.done">
+                <span :class="{ done: todo.done }">{{ todo.text }}</span>
+            </li>
         </ul>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue'
+const hideCompleted = ref(false)
 
     export default {
         data() {
             return {
                 
             }
+        },
+        methods: {
+            filteredTodos () {
+                return hideCompleted.value
+                    ? this.$store.state.todos.value.filter((t) => !t.done)
+                    : this.$store.state.todos.value
+            },
         },
         computed: {
             todos() {
@@ -44,5 +56,9 @@
       width: 350px;
       height: 450px;
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.35));
+    }
+
+    .done {
+        text-decoration: line-through;
     }
 </style>

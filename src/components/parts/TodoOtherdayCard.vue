@@ -4,7 +4,10 @@
             <slot>cardName</slot>
         </p>
         <ul>
-            <li v-for="todo in todayTodos" :key="todo.text">{{ todo.text }}</li>
+            <li v-for="todo in todayTodos" :key="todo.id">
+                <input type="checkbox" v-model="todo.done">
+                <span :class="{ done: todo.done }">{{ todo.text }}</span>
+            </li>
         </ul>
     </div>
 </template>
@@ -44,5 +47,8 @@
       width: 350px;
       height: 450px;
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.35));
+    }
+    .done {
+        text-decoration: line-through;
     }
 </style>
