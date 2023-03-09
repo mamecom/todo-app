@@ -1,14 +1,3 @@
-<template>
-    <div id="modal">
-        <div id="modal-content" class="modal">
-            <p class="modal-message">今日のタスク？今後のタスク？</p>
-            <MasterButton class="today" @click="returnToday">今日</MasterButton>
-            <MasterButton class="otherdays" @click="returnOther">今日以外</MasterButton>
-        </div>
-        <div id="modal-overlay"></div>
-    </div>
-</template>
-
 <script>
   import MasterButton from './MasterButton.vue';
 
@@ -31,6 +20,17 @@
       },
   }
 </script>
+
+<template>
+    <div id="modal">
+        <div id="modal-content" class="modal">
+            <p class="modal-message">今日のタスク？今後のタスク？</p>
+            <MasterButton class="today" @click="returnToday">今日</MasterButton>
+            <MasterButton class="otherdays" @click="returnOther">今日以外</MasterButton>
+        </div>
+        <div id="modal-overlay"></div>
+    </div>
+</template>
 
 <style scoped>
 .modal {

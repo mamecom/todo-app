@@ -1,19 +1,7 @@
-<template>
-    <div class="card">
-        <p class="cardName">
-            <slot>cardName</slot>
-        </p>
-        <ul>
-            <li v-for="todo in todayTodos" :key="todo.id">
-                <input type="checkbox" v-model="todo.done">
-                <span :class="{ done: todo.done }">{{ todo.text }}</span>
-            </li>
-        </ul>
-    </div>
-</template>
-
 <script>
 import { ref } from 'vue'
+import Export from './getdate'
+
 const hideCompleted = ref(false)
 
     export default {
@@ -33,17 +21,28 @@ const hideCompleted = ref(false)
             todos() {
                 return this.$store.state.todos
             },
-            todayTodos() {
+            showTodos() {
                 var date = new Date();
-                var day = date.getDate();
-                var month = date.getMonth() + 1;
-                var year = date.getFullYear();
-                date = `${year}/${month}/${day}`
+                date = Export.getToday()
                 return this.$store.state.todos.filter(t => t.day === date)
             }
         },
     }
 </script>
+
+<template>
+    <div class="card">
+        <p class="cardName">
+            <slot>cardName</slot>
+        </p>
+        <ul>
+            <li v-for="todo in showTodos" :key="todo.id">
+                <input type="checkbox" v-model="todo.done">
+                <span :class="{ done: todo.done }">{{ todo.text }}</span>
+            </li>
+        </ul>
+    </div>
+</template>
 
 <style>
     .cardName {

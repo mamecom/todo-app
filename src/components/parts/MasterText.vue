@@ -1,9 +1,6 @@
-<template>
-    <!-- <input type="text" @input="getInputValue" :value="value" v-model="inputText"> -->
-    <input type="text" @input="getInputValue" :value="value" />
-</template>
-
 <script>
+// TODO: 空白の場合に警告を出すようにしたい。致命的なバグではないため追々修正が必要。
+
 export default {
     props: {
         value: String,
@@ -14,5 +11,8 @@ export default {
         },
     },
 };
-
 </script>
+
+<template>
+    <input type="text" @input="getInputValue" :value="value" />
+</template>

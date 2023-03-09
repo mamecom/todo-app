@@ -1,21 +1,3 @@
-<template>
-    <main id="main-display">
-        <div id="addTodo">
-            <MasterText class="task" :value="data" @inputValue="inputData" placeholder="タスクを記入"></MasterText>
-            <MasterButton class="add-Button" @click="showModal()">タスクを追加</MasterButton>
-            <MasterModal
-                v-if=modal
-                @close-modal="setTodoDay"
-            >
-            </MasterModal>
-            <div id="todoCard">
-                <TodoTodayCard>今日のタスク</TodoTodayCard>
-                <TodoOtherdayCard>今日以外のタスク</TodoOtherdayCard>
-            </div>
-        </div>
-    </main>
-</template>
-  
 <script>
   import MasterButton from '../parts/MasterButton.vue';
   import MasterText from '../parts/MasterText.vue';
@@ -23,6 +5,7 @@
   import TodoTodayCard from '../parts/TodoTodayCard.vue'
   import TodoOtherdayCard from '../parts/TodoOtherdayCard.vue';
   import { ref } from 'vue'
+  import Export from '../parts/getdate'
   
   export default {
     data() {
@@ -32,10 +15,6 @@
             modal: false,
             todayOrOtherday: false,
             todoDay: "",
-            date: "today",
-            day: "",
-            month: "",
-            year: "",
         }
     },
     components: {
@@ -57,19 +36,15 @@
             this.todayOrOtherday= $event;                       // MEMO: true:今日、false:今日以外
 
             if (!this.todayOrOtherday) {                       // HACK: 今日、今日以外の判定をbooleanではなく明示的にしたい
-                this.todoDay = this.getDate(this.todayOrOtherday);
+                this.todoDay = Export.getSelectTodoDate(this.todayOrOtherday);
             }
-            this.todoDay = this.getDate(this.todayOrOtherday);
-            const newTodo = ref({ id: this.$store.state.todos.length + 1, text: this.newTodoText ,day: this.todoDay , done: false })
+            this.todoDay = Export.getSelectTodoDate(this.todayOrOtherday);
+            const newTodo = ref({   id: this.$store.state.todos.length + 1, 
+                                    text: this.newTodoText ,
+                                    day: this.todoDay , 
+                                    done: false
+                                })
             this.addTodo(newTodo);
-        },
-        getDate(todayOrOtherday) {
-            var date = new Date();
-            this.day = date.getDate();
-            this.month = date.getMonth() + 1;
-            this.year = date.getFullYear();
-            if(!todayOrOtherday) { return this.date = `${this.year}/${this.month}/${this.day + 1}` }
-            return this.date = `${this.year}/${this.month}/${this.day}`
         },
         addTodo(todo) {
             this.$store.dispatch('addTodo', todo)
@@ -81,7 +56,25 @@
         },
     }
   }
-  </script>
+</script>
+
+<template>
+    <main id="main-display">
+        <div id="addTodo">
+            <MasterText class="task" :value="data" @inputValue="inputData" placeholder="タスクを記入"></MasterText>
+            <MasterButton class="add-Button" @click="showModal()">タスクを追加</MasterButton>
+            <MasterModal
+                v-if=modal
+                @close-modal="setTodoDay"
+            >
+            </MasterModal>
+            <div id="todoCard">
+                <TodoTodayCard>今日のタスク</TodoTodayCard>
+                <TodoOtherdayCard>今日以外のタスク</TodoOtherdayCard>
+            </div>
+        </div>
+    </main>
+</template>
   
   <style>
     #main-display {
@@ -117,5 +110,5 @@
         justify-content: space-around;
         padding: 100px;
     }
-  
+
   </style>
