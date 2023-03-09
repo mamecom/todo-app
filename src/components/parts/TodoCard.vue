@@ -4,8 +4,10 @@
             <slot>cardName</slot>
         </p>
         <ul>
-            <li>
-            {{ todos }}</li>
+            <li
+                v-for="todo in todos" :key=todo.id>
+                {{ todo.text }}
+            </li>
         </ul>
     </div>
 </template>
@@ -22,13 +24,13 @@
         },
         computed: {
             todos() {
-            return this.$store.state.todos
+                return this.$store.state.todos
             }
         },
-        mounted() {
-            // this.data = this.$store.state.todos
-            // console.log(this.data);
-        }
+        // mounted() {
+        //     this.data = this.$store.state.todos
+        //     console.log(this.data);
+        // }
     }
 </script>
 

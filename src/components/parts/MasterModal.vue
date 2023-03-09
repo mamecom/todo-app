@@ -2,8 +2,8 @@
     <div id="modal">
         <div id="modal-content" class="modal">
             <p class="modal-message">今日のタスク？今後のタスク？</p>
-            <MasterButton class="today" @click="returnToday()">今日</MasterButton>
-            <MasterButton class="otherdays" @click="returnOther()">今日以外</MasterButton>
+            <MasterButton class="today" @click="returnToday">今日</MasterButton>
+            <MasterButton class="otherdays" @click="returnOther">今日以外</MasterButton>
         </div>
         <div id="modal-overlay"></div>
     </div>
@@ -16,7 +16,7 @@
       // name: "doneday",
       data() {
         return {
-          
+          todoDay : "",
         }
       },
       components: {
@@ -25,10 +25,12 @@
 
       methods: {
           returnToday() {
-              this.$emit("close-modal", "today");
+              // $event.target.todoDay = "today"
+              this.$emit('close-modal', 'today');
           },
-          returnOther() {
-              this.$emit("close-modal", "other");
+          returnOther($event) {
+            $event.target.todoDay = "otherday"
+              this.$emit("close-modal", $event.target.todoDay);
           },
       },
   }
