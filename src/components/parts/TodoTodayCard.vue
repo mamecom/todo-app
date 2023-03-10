@@ -1,14 +1,17 @@
 <script>
 import { ref } from 'vue'
 import Export from './getdate'
+import MasterButton from './MasterButton.vue'
 
 const hideCompleted = ref(false)
 
     export default {
         data() {
             return {
-                
             }
+        },
+        components: {
+            MasterButton,
         },
         methods: {
             filteredTodos () {
@@ -16,6 +19,7 @@ const hideCompleted = ref(false)
                     ? this.$store.state.todos.value.filter((t) => !t.done)
                     : this.$store.state.todos.value
             },
+            removeTodo(todo) { return this.$store.dispatch('removeTodo', todo) },
         },
         computed: {
             todos() {
@@ -25,7 +29,7 @@ const hideCompleted = ref(false)
                 var date = new Date();
                 date = Export.getToday()
                 return this.$store.state.todos.filter(t => t.day === date)
-            }
+            },
         },
     }
 </script>
@@ -38,7 +42,10 @@ const hideCompleted = ref(false)
         <ul>
             <li v-for="todo in showTodos" :key="todo.id">
                 <input type="checkbox" v-model="todo.done">
-                <span :class="{ done: todo.done }">{{ todo.text }}</span>
+                <span :class="{ done: todo.done }">
+                    {{ todo.text }}
+                </span>
+                <MasterButton @click=removeTodo(todo)>削除</MasterButton>
             </li>
         </ul>
     </div>

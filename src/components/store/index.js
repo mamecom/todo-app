@@ -13,11 +13,16 @@ export default createStore({
     addTodo(context, todo) {
         context.commit('addTodo', todo)
     },
+    removeTodo(context, todo) {
+      context.commit('removeTodo', todo)
+    }
   },
   mutations: {
     addTodo(state, todo) {             // MEMO: 今日選択時時
-      console.log(state.todos)
       state.todos.push(todo.value)
     },
+    removeTodo(state, todo) {
+      state.todos = state.todos.filter(t => t !== todo)
+    }
   },
 })

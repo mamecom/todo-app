@@ -39,9 +39,9 @@
                 this.todoDay = Export.getSelectTodoDate(this.todayOrOtherday);
             }
             this.todoDay = Export.getSelectTodoDate(this.todayOrOtherday);
-            const newTodo = ref({   id: this.$store.state.todos.length + 1, 
+            const newTodo = ref({   id: this.$store.state.todos.length + 1,
                                     text: this.newTodoText ,
-                                    day: this.todoDay , 
+                                    day: this.todoDay ,
                                     done: false
                                 })
             this.addTodo(newTodo);
@@ -62,7 +62,7 @@
     <main id="main-display">
         <div id="addTodo">
             <MasterText class="task" :value="data" @inputValue="inputData" placeholder="タスクを記入"></MasterText>
-            <MasterButton class="add-Button" @click="showModal()">タスクを追加</MasterButton>
+            <MasterButton class="add-Button" @click="showModal">タスクを追加</MasterButton>
             <MasterModal
                 v-if=modal
                 @close-modal="setTodoDay"
