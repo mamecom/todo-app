@@ -1,6 +1,5 @@
 <script>
 import RemoveTodo from './RemoveTodo.vue';
-// import EditTodo from './EditTodo.vue';
 import MasterText from './MasterText.vue';
 
     export default {
@@ -28,9 +27,6 @@ import MasterText from './MasterText.vue';
             },
         },
         computed: {
-            todos() {
-                return this.$store.state.todos
-            },
             showTodos() {
                 var date = new Date();
                 var day = date.getDate();
@@ -52,22 +48,12 @@ import MasterText from './MasterText.vue';
         <ul id="todo_list">
             <li v-for="todo in showTodos" :key="todo.id">
                 <div class="todo">
-                    <span
-                        v-if=!editActive
-                        class="otherday_todo_text"
-                    >
-                    {{ todo.text }}
+                    <span v-if=!editActive class="otherday_todo_text"> {{ todo.text }} </span>
+                    <span v-else class="otherday_todo_text">
+                        <MasterText class="edit_form" :value="todo.text" @inputValue="inputData"></MasterText>
                     </span>
-                    <span
-                        v-else
-                        class="otherday_todo_text"
-                    >
-                        <MasterText class="task" :value="todo.text" @inputValue="inputData"></MasterText>
-                        <!-- <input type=text :value="todo.text"> -->
-                    </span>
-                    <!-- <EditTodo @click="editFlag" :todoPass = "todo" /> -->
-                    <button @click="editText(todo)" :todoPass= "todo">編集</button>
-                    <RemoveTodo class="otherday_button_object" :todoPass = "todo" />
+                    <button class="edit_button_object" @click="editText(todo)" :todoPass= "todo">編集</button>
+                    <RemoveTodo class="remove_button_object" :todoPass = "todo" />
                 </div>
             </li>
         </ul>
@@ -104,17 +90,36 @@ import MasterText from './MasterText.vue';
         margin: 10px 3px 10px 40px;
     }
 
-    .otherday_button_object {
+    .edit_button_object {
         display: block;
         font-size: 16px;
         width: 88px;
         height: 30px;
         line-height: 1;
-        margin: 8px 3px 8px auto;
+        margin: 8px 0 8px auto;
+        padding: 0 10px;
+        border-radius: 7px;
+        border: none;
+        color: #000;
+        background-color: #D7E9B9;
+    }
+
+    .remove_button_object {
+        display: block;
+        font-size: 16px;
+        width: 88px;
+        height: 30px;
+        line-height: 1;
+        margin: 8px 3px 8px 12px;
         padding: 0 10px;
         border-radius: 7px;
         border: none;
         color: #fff;
         background-color: #B40000;
+    }
+
+    .edit_form {
+        font-size: 16px;
+        padding: 2px 0;
     }
 </style>

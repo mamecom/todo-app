@@ -17,9 +17,6 @@ const hideCompleted = ref(false)
             },
         },
         computed: {
-            todos() {
-                return this.$store.state.todos
-            },
             showTodos() {
                 var date = new Date();
                 date = Export.getToday()
@@ -41,7 +38,7 @@ const hideCompleted = ref(false)
                     <span class="todo_text" :class="{ done: todo.done }">
                         {{ todo.text }}
                     </span>
-                    <RemoveTodo class="today_button_object" :todoPass = "todo" />
+                    <RemoveTodo class="today_button_object" :todoPass = "todo" :class="{ done_button: todo.done }" disabled="disabled"/>
                 </div>
             </li>
         </ul>
@@ -63,6 +60,9 @@ const hideCompleted = ref(false)
 
     .done {
         text-decoration: line-through;
+    }
+    .done_button:disabled {
+        background-color: #909090 !important;
     }
 
     #todo_list {

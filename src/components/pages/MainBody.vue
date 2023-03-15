@@ -50,11 +50,6 @@
             this.$store.dispatch('addTodo', todo)
         },
     },
-    computed: {
-        todos() {
-            return this.$store.state.todos;
-        },
-    }
   }
 </script>
 
