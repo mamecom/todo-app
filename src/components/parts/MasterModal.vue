@@ -1,22 +1,9 @@
-<template>
-    <div id="modal">
-        <div id="modal-content" class="modal">
-            <p class="modal-message">今日のタスク？今後のタスク？</p>
-            <MasterButton class="today" @click="returnToday()">今日</MasterButton>
-            <MasterButton class="otherdays" @click="returnOther()">今日以外</MasterButton>
-        </div>
-        <div id="modal-overlay"></div>
-    </div>
-</template>
-
 <script>
   import MasterButton from './MasterButton.vue';
 
     export default {
-      // name: "doneday",
       data() {
         return {
-          
         }
       },
       components: {
@@ -25,14 +12,25 @@
 
       methods: {
           returnToday() {
-              this.$emit("close-modal", "today");
+              this.$emit('close-modal', true);     // HACK: 引数の命名を今日、それ以外でわかるようにしたい
           },
           returnOther() {
-              this.$emit("close-modal", "other");
+              this.$emit("close-modal", false);     // HACK: 引数の命名を今日、それ以外でわかるようにしたい
           },
       },
   }
 </script>
+
+<template>
+    <div id="modal">
+        <div id="modal-content" class="modal">
+            <p class="modal-message">今日のタスク？今後のタスク？</p>
+            <MasterButton class="today" @click="returnToday">今日</MasterButton>
+            <MasterButton class="otherdays" @click="returnOther">今日以外</MasterButton>
+        </div>
+        <div id="modal-overlay"></div>
+    </div>
+</template>
 
 <style scoped>
 .modal {
