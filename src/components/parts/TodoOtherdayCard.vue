@@ -1,8 +1,31 @@
 <script>
+import RemoveTodo from './RemoveTodo.vue';
+// import EditTodo from './EditTodo.vue';
+import MasterText from './MasterText.vue';
+
     export default {
         data() {
             return {
+                editActive: false,
+                todoText: "",
             }
+        },
+        components: {
+            RemoveTodo,
+            MasterText,
+        },
+        methods: {
+            editText(todo) {
+                if (!this.editActive) {
+                    this.editActive = true;
+                } else {
+                    this.$store.dispatch('editTodo', {indexTodo: todo, EditedText: this.todoText}) 
+                    this.editActive = false;
+                }
+            },
+            inputData(value) {
+                this.todoText = value;
+            },
         },
         computed: {
             todos() {
@@ -15,7 +38,8 @@
                 var year = date.getFullYear();
                 date = `${year}/${month}/${day}`
                 return this.$store.state.todos.filter(t => t.day !== date)
-            }
+            },
+            
         },
     }
 </script>
@@ -25,10 +49,26 @@
         <p class="cardName">
             <slot>cardName</slot>
         </p>
-        <ul>
+        <ul id="todo_list">
             <li v-for="todo in showTodos" :key="todo.id">
-                <input type="checkbox" v-model="todo.done">
-                <span :class="{ done: todo.done }">{{ todo.text }}</span>
+                <div class="todo">
+                    <span
+                        v-if=!editActive
+                        class="otherday_todo_text"
+                    >
+                    {{ todo.text }}
+                    </span>
+                    <span
+                        v-else
+                        class="otherday_todo_text"
+                    >
+                        <MasterText class="task" :value="todo.text" @inputValue="inputData"></MasterText>
+                        <!-- <input type=text :value="todo.text"> -->
+                    </span>
+                    <!-- <EditTodo @click="editFlag" :todoPass = "todo" /> -->
+                    <button @click="editText(todo)" :todoPass= "todo">編集</button>
+                    <RemoveTodo class="otherday_button_object" :todoPass = "todo" />
+                </div>
             </li>
         </ul>
     </div>
@@ -36,17 +76,45 @@
 
 <style>
     .cardName {
-        font-size: 24px;
+        font-size: 32px;
     }
     .card {
       display: block;
       padding: 12px 28px;
       background-color: #FFF;
-      width: 350px;
-      height: 450px;
+      width: 413px;
+      height: 548px;
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.35));
     }
-    .done {
-        text-decoration: line-through;
+
+    #todo_list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .todo {
+        display: flex;
+    }
+
+    .otherday_todo_text {
+        display: block;
+        font-size: 16px;
+        margin-left: 20px;
+        text-align: center;
+        margin: 10px 3px 10px 40px;
+    }
+
+    .otherday_button_object {
+        display: block;
+        font-size: 16px;
+        width: 88px;
+        height: 30px;
+        line-height: 1;
+        margin: 8px 3px 8px auto;
+        padding: 0 10px;
+        border-radius: 7px;
+        border: none;
+        color: #fff;
+        background-color: #B40000;
     }
 </style>
