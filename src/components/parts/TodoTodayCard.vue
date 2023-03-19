@@ -38,7 +38,8 @@ const hideCompleted = ref(false)
                     <span class="todo_text" :class="{ done: todo.done }">
                         {{ todo.text }}
                     </span>
-                    <RemoveTodo class="today_button_object" :todoPass = "todo" :class="{ done_button: todo.done }" disabled="disabled"/>
+                    <RemoveTodo v-if="!todo.done" class="today_button_object" :todoPass = "todo" :class="{ done_button: todo.done }" />
+                    <RemoveTodo v-else class="today_button_object" :todoPass = "todo" :class="{ done_button: todo.done }" disabled />
                 </div>
             </li>
         </ul>
